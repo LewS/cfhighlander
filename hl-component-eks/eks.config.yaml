@@ -1,0 +1,64 @@
+maximum_availability_zones: 5
+
+# cluster name is prefixed with environment name
+# cluster_name: cluster
+
+# eks_extra_tags:
+#   Name: Value
+
+# eks_agent_extra_config:
+#   ECS_ENGINE_TASK_CLEANUP_WAIT_DURATION: 10m
+#   ECS_IMAGE_CLEANUP_INTERVAL: 10m
+#   ECS_IMAGE_MINIMUM_CLEANUP_AGE: 5m
+
+# asg_update_policy:
+#   AutoScalingRollingUpdate:
+#     MaxBatchSize: 1
+#     MinInstancesInService: 1
+#     SuspendProcesses: ["HealthCheck","ReplaceUnhealthy","AZRebalance","AlarmNotification","ScheduledActions"]
+
+# volume_size: 20
+
+# Scaling is based on reservation
+# eks_autoscale:
+#   scale_up_adjustment: 2
+#   scale_down_adjustment: -1
+#   memory_high: 70
+#   memory_low: 30
+#   # cpu_high:
+#   # cpu_low:
+
+# eks_additional_userdata:
+# - "/ec2-bootstrap"
+
+
+component_version: 0.0.1
+log_group_retention: 14
+
+enable_efs: false
+
+iam_policies:
+  eks-container-instance:
+    action:
+      - eks:CreateCluster
+      - eks:DeregisterContainerInstance
+      - eks:DiscoverPollEndpoint
+      - eks:Poll
+      - eks:RegisterContainerInstance
+      - eks:StartTelemetrySession
+      - eks:Submit*
+      - ecr:GetAuthorizationToken
+      - ecr:BatchCheckLayerAvailability
+      - ecr:GetDownloadUrlForLayer
+      - ecr:BatchGetImage
+      - logs:CreateLogStream
+      - logs:PutLogEvents
+  eks-service-scheduler:
+    action:
+      - ec2:AuthorizeSecurityGroupIngress
+      - ec2:Describe*
+      - elasticloadbalancing:DeregisterInstancesFromLoadBalancer
+      - elasticloadbalancing:DeregisterTargets
+      - elasticloadbalancing:Describe*
+      - elasticloadbalancing:RegisterInstancesWithLoadBalancer
+      - elasticloadbalancing:RegisterTargets

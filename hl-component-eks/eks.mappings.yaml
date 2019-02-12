@@ -1,0 +1,14 @@
+AccountId:
+  '000000000000':
+    KeyName: key
+    DnsDomain: example.tld
+
+EnvironmentType:
+  development:
+    EksInstanceType: t2.micro
+    EksAsgMin: 1
+    EksAsgMax: 2
+  production:
+    EksInstanceType: t2.micro
+    EksAsgMin: 1
+    EksAsgMax: 2
